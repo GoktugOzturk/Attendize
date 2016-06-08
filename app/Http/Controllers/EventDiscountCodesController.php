@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Ticket;
-use App\Models\DiscountCode
+use App\Models\DiscountCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Log;
@@ -48,7 +48,7 @@ class EventDiscountCodesController extends MyBaseController
 
         // Return view.
 	//TODO: change compact to what I need
-        return view('ManageEvent.DiscountCodes', compact('event', 'tickets', 'sort_by', 'q', 'allowed_sorts'));
+        return view('ManageEvent.Tickets', compact('event', 'tickets', 'sort_by', 'q', 'allowed_sorts'));
     }
 */
     /**
@@ -77,6 +77,7 @@ class EventDiscountCodesController extends MyBaseController
     public function showCreateDiscountCode($event_id)
     {
 	//TODO: route to DiscountCodeModal
+	Log::info("Trying to route to discount code modal");
         return view('ManageEvent.Modals.CreateDiscountCode', [
                     'event'    => Event::scope()->find($event_id),
         ]);
@@ -90,7 +91,7 @@ class EventDiscountCodesController extends MyBaseController
      */
     public function postCreateDiscountCode(Request $request, $event_id)
     {
-        $discount_code = DiscountCode::createNew();
+        $discount_code = DiscountCode::createNew(false, false, true);
 
         if (!$discount_code->validate($request->all())) {
             return response()->json([
@@ -100,13 +101,13 @@ class EventDiscountCodesController extends MyBaseController
         }
 
         $discount_code->event_id = $event_id;
-        $discount_code->type = $request->get('type');
+        $discount_code->type = "flat"; //$request->get('type');
 	$discount_code->amount = $request->get('amount');
 	$discount_code->code = $request->get('code');
 	$discount_code->exp_at = $request->get('exp_at') ? Carbon::createFromFormat('d-m-Y H:i', $request->get('exp_at')) : null;
 	$discount_code->times_used = 0;
 	$discount_code->max_times_used = $request->get('max_times_used') ? $request->get('max_times_used') : PHP_INT_MAX;
-
+	Log::info("Trying to save to database");
         $discount_code->save();
 
         session()->flash('message', 'Successfully Created Discount Code');
