@@ -207,6 +207,13 @@
                     class="{{$tab == 'ticket_design' ? 'active' : ''}}"><a href="#ticket_design" data-toggle="tab">Ticket
                         Design</a></li>
 
+                    <!-- added for discount code -->
+
+                <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'Discount_code'] )}}"
+                    class="{{$tab=='discount_code' ? 'active' : ''}}"><a href="#discount_code" data-toggle="tab"> Discount 
+                    Code </a></li>
+
+
             </ul>
             <!--/ tab -->
             <!-- tab content -->
@@ -574,6 +581,92 @@
                     {!! Form::close() !!}
 
                 </div>
+
+
+               <div class="tab-pane {{$tab=='discount_code' ? 'active' : ''}}" id="discount_code">
+                    {!! Form::model($event, array('url' => route('postEditDiscountCode', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
+                    <h4>Discount Code Settings</h4>
+
+                    <div class="row">
+
+                        <!-- What is this control required thing???? -->
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {!! Form::label('amount', 'Amount of discount you are giving off', array('class'=>' control-label')) !!}
+                                {!!  Form::text('amount', Input::old('amount'),
+                                            array(
+                                            'class'=>'form-control',
+                                            'placeholder'=>'E.g: 5'
+                                            )
+                                            )  !!}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {!! Form::label('code', 'Discount Code', array('class'=>' control-label')) !!}
+                                {!!  Form::text('code', Input::old('code'),
+                                            array(
+                                            'class'=>'form-control',
+                                            'placeholder'=>'We want it to be 10 digits '
+                                            )
+                                            )  !!}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {!! Form::label('max_times_used', 'Maximum times this discount code can be used', array('class'=>' control-label')) !!}
+                                {!!  Form::text('max_times_used', Input::old('max_times_used'),
+                                            array(
+                                            'class'=>'form-control',
+                                            'placeholder'=>'E.g: 10'
+                                            )
+                                            )  !!}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+
+
+                    {!! Form::close() !!}
+                    </div>
+
+                     @if($event->discount_code->count())
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Code</th>
+                                    <th>Amount</th>
+                                    <th>Times Used </th>
+                                    <th>Maximum Times Used</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @foreach($event->discount_codes as $discount_code)
+                                    <tr>
+                                        <td>{{ $discount_codes->type }}</td>
+                                        <td>{{ $discount_codes->code }}</td>
+                                        <td>{{ $discount_codes->amount}}</td>
+                                        <td>{{ $discount_codes->times_used}}</td>
+                                        <td>{{ $discount_codes->max_times_used }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="alert alert-info">
+                            No discount code availble yet. 
+                        </div>
+                    @endif
+
+               </div>
+
+
 
             </div>
             <!--/ tab content -->

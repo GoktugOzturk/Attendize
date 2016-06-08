@@ -286,3 +286,16 @@ $factory->define(App\Models\EventImage::class, function (Faker\Generator $faker)
     ];
 });
 
+
+$factory->define(App\Models\DiscountCode::class, function (Faker\Generator $faker)
+    return [
+        'type'            => 'percent', //another option here is flat
+        'amount'          => 5,
+        'code'            => str_random(10), //TODO: make it user customizable
+        'exp_at'          => Carbon::now()->addDays(10), //for now lets make it 10 days
+        'times_used'      => 0,
+        'max_times_used'  => 10,
+        'event_id'        => factory(App\Model\Event::class) -> create()->id()
+
+
+    ]);
