@@ -22,8 +22,11 @@ class AddDiscountCodes extends Migration
 	    $table->integer('max_times_used')->unsigned()->default(PHP_INT_MAX);	    
 	    $table->integer('event_id');
 
-	    $table->index(['event_id', 'code']);
+	    $table->unique(['event_id', 'code']);
 	    $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+
+	    $table->timestamps();
+	    $table->softDeletes();
         });
 
 	Schema::table('orders', function($table) {

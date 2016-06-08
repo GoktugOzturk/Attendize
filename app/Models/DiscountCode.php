@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /*
   Attendize.com   - Event Management & Ticketing
  */
@@ -13,6 +15,7 @@ namespace App\Models;
  */
 class DiscountCode extends MyBaseModel
 {
+    use SoftDeletes;
 
     protected $rules = [
         'amount'	 => ['required', 'numeric', 'min:0'],

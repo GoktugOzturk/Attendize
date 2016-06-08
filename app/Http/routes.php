@@ -373,6 +373,35 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
             'uses' => 'EventTicketQuestionsController@postCreateQuestion',
         ]);
 
+	/*
+	 * Discount Codes
+	 */
+
+	Route::get('{event_id}/discountCodes/', [
+            'as'   => 'showEventDiscountCodes',
+            'uses' => 'EventDiscountCodesController@showDiscountCodes',
+        ]);
+        Route::get('{event_id}/discountCodes/edit/{code_id}', [
+            'as'   => 'showEditDiscountCode',
+            'uses' => 'EventDiscountCodesController@showEditDiscountCode',
+        ]);
+        Route::post('{event_id}/discountCodes/edit/{code_id}', [
+            'as'   => 'postEditDiscountCode',
+            'uses' => 'EventDiscountCodesController@postEditDiscountCode',
+        ]);
+        Route::get('{event_id}/discountCodes/create', [
+            'as'   => 'showCreateDiscountCode',
+            'uses' => 'EventDiscountCodesController@showCreateDiscountCode',
+        ]);
+        Route::post('{event_id}/discountCodes/create', [
+            'as'   => 'postCreateDiscountCode',
+            'uses' => 'EventDiscountCodesController@postCreateDiscountCode',
+        ]);
+        Route::post('{event_id}/discountCodes/delete', [
+            'as'   => 'postDeleteDiscountCode',
+            'uses' => 'EventDiscountCodesController@postDeleteDiscountCode',
+        ]);
+
         /*
          * -------
          * Attendees
