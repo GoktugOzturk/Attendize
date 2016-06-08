@@ -672,6 +672,17 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
         ]);
 
 
+        
+               //is the first string the url?
+        Route::get('{event_id}/show_code', [
+            'as'   => 'PostDiscountCode',
+            'uses' => 'DiscountCodeController@PostDiscountCode',
+        ]);
+        Route::post('{event_id}/set_code', [
+            'as'   => 'getDiscountCode',
+            'uses' => 'DiscountCodeController@getDiscountCode',
+        ]);
+
         /*
          * -------
          * QRCode Check In App
