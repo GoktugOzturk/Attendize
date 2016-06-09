@@ -23,6 +23,7 @@
                     <span class="text">Tickets</span>
                 </a>
             </li>
+
             <li class="{{ Request::is('*orders*') ? 'active' : '' }}">
                 <a href="{{route('showEventOrders', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-cart"></i></span>
@@ -62,6 +63,13 @@
                     <span class="text">Surveys</span>
                 </a>
             </li>
+	    <li class="{{ Request::is('*discount codes*') ? 'active' : '' }}">
+                <a href="{{route('showEventDiscountCodes', array('event_id' => $event->id))}}">
+                    <span class="figure"><i class="ico-money"></i></span>
+                    <span class="text">Discount Codes</span>
+                </a>
+            </li>
+
             <li class="{{ Request::is('*widgets*') ? 'active' : '' }}">
                 <a href="{{route('showEventWidgets', array('event_id' => $event->id))}}">
                     <span class="figure"><i class="ico-code"></i></span>

@@ -20,37 +20,28 @@ class EventDiscountCodesController extends MyBaseController
      * @param $event_id
      * @return mixed
      */
-     /*
     public function showDiscountCodes(Request $request, $event_id)
     {
-        $allowed_sorts = [
-            'created_at' => 'Creation date',
-            'title' => 'Ticket title',
-            'quantity_sold' => 'Quantity sold',
-            'sales_volume' => 'Sales volume',
-        ];
-
-        // Getting get parameters.
-        $q = $request->get('q', '');
-        $sort_by = $request->get('sort_by');
-        if (isset($allowed_sorts[$sort_by]) === false)
-            $sort_by = 'title';
-
         // Find event or return 404 error.
+	Log::info("In show discount codes");
         $event = Event::scope()->find($event_id);
-        if ($event === null)
+        if ($event === null) {
+	    Log::info("The event is null!");
             abort(404);
+	}
+
+	Log::info("Got an event");
 
         // Get tickets for event.
-        $discount_codes = empty($q) === false
-                ? $event->tickets()->where('code', 'like', '%'.$q.'%')->orderBy($sort_by, 'desc')->paginate()
-                : $event->tickets()->orderBy($sort_by, 'desc')->paginate();
-
+        $discount_codes = $event->discountCodes();
+	if ($discount_codes === null)
+	   Log::info("There are no discount codes!!!!");
+	else
+	   Log::info("There are some discount codes!!! " . $discount_codes->count());
         // Return view.
-	//TODO: change compact to what I need
-        return view('ManageEvent.Tickets', compact('event', 'tickets', 'sort_by', 'q', 'allowed_sorts'));
+        return view('ManageEvent.DiscountCodes', compact('event', 'discount_codes'));
     }
-*/
+
     /**
      * Show the edit discount code modal
      *
@@ -61,7 +52,7 @@ class EventDiscountCodesController extends MyBaseController
     public function showEditDiscountCode($event_id, $discount_code_id)
     {
         $data = [
-            'event'    => Event::scope()->find($event_id),
+            'event_id'    => $event_id,
             'discount_code'   => DiscountCode::scope()->find($discount_code_id),
         ];
 
@@ -124,7 +115,7 @@ class EventDiscountCodesController extends MyBaseController
     }
 
     /**
-     * Deleted a ticket
+     * Deleted a discount code
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -193,14 +184,10 @@ class EventDiscountCodesController extends MyBaseController
             ]);
         }
 
-        $discount_code->title = $request->get('title');
-        $discount_code->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
-        $discount_code->price = $request->get('price');
-        $discount_code->start_sale_date = $request->get('start_sale_date') ? Carbon::createFromFormat('d-m-Y H:i', $request->get('start_sale_date')) : null;
-        $discount_code->end_sale_date = $request->get('end_sale_date') ? Carbon::createFromFormat('d-m-Y H:i', $request->get('end_sale_date')) : null;
-        $discount_code->description = $request->get('description');
-        $discount_code->min_per_person = $request->get('min_per_person');
-        $discount_code->max_per_person = $request->get('max_per_person');
+        $discount_code->code = $request->get('code');
+        $discount_code->max_times_used = !$request->get('max_times_used') ? null : $request->get('max_times_used');
+        $discount_code->amount = $request->get('amount');
+        $discount_code->exp_at = $request->get('exp_at') ? Carbon::createFromFormat('d-m-Y H:i', $request->get('exp_at')) : null;
 
         $discount_code->save();
 
@@ -208,7 +195,7 @@ class EventDiscountCodesController extends MyBaseController
                     'status'      => 'success',
                     'id'          => $discount_code->id,
                     'message'     => 'Refreshing...',
-                    'redirectUrl' => route('showEventTickets', [
+                    'redirectUrl' => route('showEventDiscountCodes', [
                         'event_id' => $event_id,
                     ]),
         ]);

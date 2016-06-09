@@ -584,7 +584,7 @@
 
 
                <div class="tab-pane {{$tab=='discount_code' ? 'active' : ''}}" id="discount_code">
-                    {!! Form::model($event, array('url' => route('postEditDiscountCode', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
+{{--                    {!! Form::model($event, array('url' => route('postEditDiscountCode', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
                     <h4>Discount Code Settings</h4>
 
                     <div class="row">
@@ -632,7 +632,7 @@
                     {!! Form::close() !!}
                     </div>
 
-                     @if($event->discount_code->count())
+                     @if($discount_codes->count())
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -648,11 +648,11 @@
                                 <tbody>
                                 @foreach($event->discount_codes as $discount_code)
                                     <tr>
-                                        <td>{{ $discount_codes->type }}</td>
-                                        <td>{{ $discount_codes->code }}</td>
-                                        <td>{{ $discount_codes->amount}}</td>
-                                        <td>{{ $discount_codes->times_used}}</td>
-                                        <td>{{ $discount_codes->max_times_used }}</td>
+                                        <td>{{ $discount_code->type }}</td>
+                                        <td>{{ $discount_code->code }}</td>
+                                        <td>{{ $discount_code->amount}}</td>
+                                        <td>{{ $discount_code->times_used}}</td>
+                                        <td>{{ $discount_code->max_times_used }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -663,7 +663,7 @@
                             No discount code availble yet. 
                         </div>
                     @endif
-
+--}}
                </div>
 
 

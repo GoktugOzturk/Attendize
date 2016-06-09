@@ -131,6 +131,10 @@ class Event extends MyBaseModel
         return $this->hasMany('\App\Models\Order');
     }
 
+    public function discountCodes() {
+    	return $this->hasMany('\App\Models\DiscountCode');
+    }
+
     /**
      * The account associated with the event.
      *

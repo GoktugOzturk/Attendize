@@ -17,14 +17,14 @@ class DiscountCode extends MyBaseModel
 {
     use SoftDeletes;
 
-    protected $rules = [
+    public $rules = [
         'amount'	 => ['required', 'numeric', 'min:0'],
 	'code'		 => ['required', 'max:32'],
 	'exp_at'    	 => ['date'],
 	'max_times_used' => ['integer', 'min:1']
     ];
 
-    protected $messages = [
+    public $messages = [
         'amount.required'	=> 'Please input your discount amount.',
 	'code.required'		=> 'Please type what your discount code will be.',
 	'max_times_used.min'	=> 'Maximum should be greater than 0 (leave blank for no max).'
