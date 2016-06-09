@@ -11,17 +11,18 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('code', 'Discount Code', array('class'=>'control-label required')) !!}
-                            {!!  Form::text('code', Input::old('code'),
-                                        array(
-                                        'class'=>'form-control',
-                                        'placeholder'=>'E.g: SUMMER15OFF'
-                                        ))  !!}
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
+		    	<div class="row">
+		    	    <div class="col-sm-6">
+                                <div class="form-group">
+                                   {!! Form::label('code', 'Discount Code', array('class'=>'control-label required')) !!}
+                           	   {!!  Form::text('code', Input::old('code'),
+                                         	    array(
+                                        	       'class'=>'form-control',
+                                        	       'placeholder'=>'E.g: SUMMER15OFF'
+                                        	        ))  !!}
+                        	</div>
+			    </div>
+			    <div class="col-sm-6">
                                 <div class="form-group">
                                     {!! Form::label('amount', 'Discount Amount', array('class'=>'control-label required')) !!}
                                     {!!  Form::text('amount', Input::old('amount'),
@@ -31,9 +32,11 @@
                                                 ))  !!}
 
 
-                                </div>
-                            </div>
-
+                        	 </div>
+ 			    </div>
+			</div>
+		        <div class="row">
+                           
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     {!! Form::label('max_times_used', 'Quantity Available', array('class'=>' control-label')) !!}
@@ -45,71 +48,24 @@
                                                 )  !!}
                                 </div>
                             </div>
-
-                        </div>
-
-                        <div class="form-group more-options">
-                            {!! Form::label('description', 'Ticket Description', array('class'=>'control-label')) !!}
-                            {!!  Form::text('description', Input::old('description'),
-                                        array(
-                                        'class'=>'form-control'
-                                        ))  !!}
-                        </div>
-
-                        <div class="row more-options">
-                            <div class="col-sm-6">
+			    <div class="col-sm-6">
                                 <div class="form-group">
-                                    {!! Form::label('start_sale_date', 'Start Sale On', array('class'=>' control-label')) !!}
-                                    {!!  Form::text('start_sale_date', Input::old('start_sale_date'),
+                                    {!! Form::label('exp_at', 'Expiration Date', array('class'=>' control-label')) !!}
+                                    {!!  Form::text('exp_at', Input::old('exp_at'),
                                                     [
                                                 'class'=>'form-control start hasDatepicker ',
                                                 'data-field'=>'datetime',
-                                                'data-startend'=>'start',
-                                                'data-startendelem'=>'.end',
-                                                'readonly'=>''
+                                                //'data-startend'=>'start',
+                                                //'data-startendelem'=>'.end',
+                                                'readonly'=>'',
+						'placeholder' => 'Click to select a date'
 
                                             ])  !!}
                                 </div>
                             </div>
 
-                            <div class="col-sm-6 ">
-                                <div class="form-group">
-                                    {!!  Form::label('end_sale_date', 'End Sale On',
-                                                [
-                                            'class'=>' control-label '
-                                        ])  !!}
-                                    {!!  Form::text('end_sale_date', Input::old('end_sale_date'),
-                                            [
-                                        'class'=>'form-control end hasDatepicker ',
-                                        'data-field'=>'datetime',
-                                        'data-startend'=>'end',
-                                        'data-startendelem'=>'.start',
-                                        'readonly'=>''
-                                    ])  !!}
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="row more-options">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('min_per_person', 'Minimum Tickets Per Order', array('class'=>' control-label')) !!}
-                                    {!! Form::selectRange('min_per_person', 1, 100, 1, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('max_per_person', 'Maximum Tickets Per Order', array('class'=>' control-label')) !!}
-                                    {!! Form::selectRange('max_per_person', 1, 100, 30, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <a href="javascript:void(0);" class="show-more-options">
-                            More Options
-                        </a>
                     </div>
 
                 </div>
@@ -117,7 +73,7 @@
             </div> <!-- /end modal body-->
             <div class="modal-footer">
                {!! Form::button('Cancel', ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
-               {!! Form::submit('Create Ticket', ['class'=>"btn btn-success"]) !!}
+               {!! Form::submit('Create Code', ['class'=>"btn btn-success"]) !!}
             </div>
         </div><!-- /end modal content-->
        {!! Form::close() !!}

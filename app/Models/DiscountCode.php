@@ -30,7 +30,7 @@ class DiscountCode extends MyBaseModel
 	'max_times_used.min'	=> 'Maximum should be greater than 0 (leave blank for no max).'
     ];
 
-    protected $table = 'discount_code';
+    protected $table = 'discount_codes';
 
 
     //not sure if we need fillable here
@@ -42,10 +42,7 @@ class DiscountCode extends MyBaseModel
         'times_used',
         'max_times_used',
         'event_id'
-    ]
-
-
-
+    ];
 
     public function event() {
         return $this->belongsTo('\App\Models\Event');
